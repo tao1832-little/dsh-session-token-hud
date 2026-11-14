@@ -1,6 +1,6 @@
 {
   "name": "dsh-session-token-hud",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "Floating HUD card for DeepSeek Harness Web: per-session token usage, context window pressure, and tokens per second.",
   "type": "module",
   "license": "MIT",
