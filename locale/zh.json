@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Token 用量",
-    "description": "在网页界面里悬浮显示当前会话的 token 用量、上下文占用与生成速度。"
-  }
-}
+    "title": "Token 鐢ㄩ噺",
+    "description": "鍦ㄧ綉椤电晫闈㈤噷鎮诞鏄剧ず褰撳墠浼氳瘽鐨?token 鐢ㄩ噺銆佷笂涓嬫枃鍗犵敤涓庣敓鎴愰€熷害銆?
+",
+  "hud.backgroundColor": "&缂浾搱屾毂
