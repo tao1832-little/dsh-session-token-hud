@@ -18,30 +18,19 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - name: Check npm token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "::error::NPM_TOKEN secret is missing or empty"
-            exit 1
-          fi
-          echo "NPM_TOKEN present, length ${#NODE_AUTH_TOKEN}"
-
-      - name: Show version being published
-        run: node -p "require('./package.json').name + '@' + require('./package.json').version"
-
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set +e
+          who=$(npm whoami 2>&1 | head -c 60)
+          echo "npm whoami: $who"
+          echo "registry: $(npm config get registry)"
           npm publish --access public > publish.log 2>&1
           status=$?
           if [ "$status" -ne 0 ]; then
-            msg=$(grep -i -m1 'npm ERR' publish.log | tr '\n' ' ' | head -c 400)
-            echo "::error::publish failed (exit $status): $msg"
-            echo '--- full log ---'
+            msg=$(tr '\n' ' ' < publish.log | head -c 1200)
+            echo "::error::whoami=[$who] $msg"
             cat publish.log
             exit "$status"
           fi
