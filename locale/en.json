@@ -2,5 +2,6 @@
   "meta": {
     "title": "Token HUD",
     "description": "Floating card with session token usage, context pressure, and tokens per second."
-  }
+  },
+  "hud.backgroundColor": "BAckground Color"
 }
