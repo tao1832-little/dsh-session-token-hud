@@ -35,10 +35,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          set -o pipefail
-          npm publish --access public 2>&1 | tee publish.log
-          status=${PIPESTATUS[0]}
+          set +e
+          npm publish --access public > publish.log 2>&1
+          status=$?
           if [ "$status" -ne 0 ]; then
-            echo "::error::$(tail -n 6 publish.log | tr '\n' ' ')"
+            msg=$(grep -i -m1 'npm ERR' publish.log | tr '\n' ' ' | head -c 400)
+            echo "::error::publish failed (exit $status): $msg"
+            echo '--- full log ---'
+            cat publish.log
             exit "$status"
           fi
+          echo "published OK"
